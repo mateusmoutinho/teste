@@ -6,31 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<style>
-    iframe{
-        position: absolute;
-        left: 30%;
-    }
-    p{
-        text-align: center;
-    }
-    h1{
-        text-align: center;
-        color:red;
-        font-size: 40px;
-      
-    }
-</style>
 <body>
-    <h1>Eai Alex Blz</h1>
-    <p>
 
-        Olha a landing page funcionando man 
-    </p>
-    <iframe width="700" height="500" src="https://drive.google.com/file/d/1Jq9QAXZvk4K5R0EO_DBia1-lvmysJx7o/preview">
-
-
-
-    </iframe>
+  <input id="teste" type="file" name="uploadFile"  required />  
+  <br>  <br>
+  <button onclick="teste_envio()"> enviar </button>
 </body>
+<script>
+
+ function teste_envio(){
+      
+       let arquivo = document.getElementById("teste").files[0]
+       var objectURL = window.URL.createObjectURL(arquivo);
+        console.log(objectURL)
+        /*
+      fetch("http://127.0.0.1:5000/",
+        {
+        method: "POST",
+        mode:"cors",
+        withCredentials: true,
+        body: dataForm
+        }
+
+        ).then(function(elem) {
+        return elem.text()
+        }).then(function(result){
+            console.log(result)
+        })*/
+ }
+</script>
 </html>
