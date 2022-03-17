@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,32 +9,136 @@
     <title>Document</title>
 </head>
 <body>
+   
+            <div id="esquerda">
+            <h3> Faça o upload</h3>
+            <p id="status"></p>
+            <a id="link"></a>
+            <div>
 
-  <input id="teste" type="file" name="uploadFile"  required />  
-  <br>  <br>
-  <button onclick="teste_envio()"> enviar </button>
+                        <input id="video" type="file" name="uploadFile"  required /
+                        onclick="limpa('erro_video')"
+                        placeholder="video" accept="video/mp4"
+
+                        >
+                        <p id="erro_video"></p>
+
+            </div>
+            <div>
+                <input id="mensagem_inicial" placeholder="mensagem inicial"/>
+                <br> <br>
+                <input  id="mensagem_pausa" placeholder="mensagem  de pausa"/>
+                <br> <br>
+                <input  id="cor" placeholder="cor da fonte" value="#ffffff" type="color"/>
+            </div>
+            <br>
+             senha
+            <input id="senha" onclick="limpa('erro_senha')"  placeholder="senha"/> 
+            <p id="erro_senha"></p>
+            <br>
+            
+            <button onclick="teste_envio()"> enviar </button>
+
+            </div>
+            <div id="direita" ></div>
+
 </body>
+<style>
+   
+    #esquerda{
+        display: inline-block;
+       
+    }
+    #direita{
+
+        float: right;
+        margin-right: 200px;
+        background-color: black;
+        color: white;
+      width: 700px;
+      height: 500px;
+   
+  }
+    p{
+        color: red;
+    }
+</style>
 <script>
 
- function teste_envio(){
+function limpa(id){
+    document.getElementById(id).textContent = ""
+}
+
+function teste_envio(){
+
+   
+     
+      let dataForm = new FormData();
+      let video = document.getElementById("video").files[0]
+    
+      if(video == undefined){
+          document.getElementById("erro_video").textContent = "Video nulo"
+          return 
+      }
+
+      dataForm.append('video',video)
       
-       let arquivo = document.getElementById("teste").files[0]
-       var objectURL = window.URL.createObjectURL(arquivo);
-        console.log(objectURL)
-        /*
-      fetch("http://127.0.0.1:5000/",
-        {
+      senha = document.getElementById("senha").value 
+      if(senha == ""){
+          document.getElementById("erro_senha").textContent ="senha não pode ser nula"
+          return 
+      }
+
+      dataForm.append("senha",senha)
+      
+      mensagem_inicial = document.getElementById("mensagem_inicial").value 
+      if(mensagem_inicial != ""){
+          dataForm.append("mensagem_inicial",mensagem_inicial)
+      }
+
+      mensagem_pausa = document.getElementById("mensagem_pausa").value
+    
+      if(mensagem_pausa != ""){
+          dataForm.append("mensagem_de_pausa",mensagem_pausa)
+      }
+      let cor = document.getElementById("cor").value 
+      if(cor != ""){
+          dataForm.append("cor",cor)
+      }
+
+
+      
+      //faz envio 
+      document.getElementById("status").textContent = "processando...."
+      
+      let props =   {
         method: "POST",
         mode:"cors",
         withCredentials: true,
-        body: dataForm
+        body:dataForm
         }
+      fetch(
+        "http://147.182.212.79:5000 ",props)
+    .then(function(elem) {
+             return elem.json()
+    })
+    .then(function(result){
+        document.getElementById("status").textContent = ""
+      
+        if(result.codigo == 101){
+            document.getElementById("erro_senha").textContent = "senha inválida"
+            return 
+        }
+        console.log(result)
+        document.getElementById("direita").textContent = result.div
+        document.getElementById("status").innerHTML = "exemplo de landing page: <br>"
+        link = document.getElementById("link")
+        link.href = result.pagina_gerada
+        link.innerHTML = "pagina de exemplo"
+    })
+    
 
-        ).then(function(elem) {
-        return elem.text()
-        }).then(function(result){
-            console.log(result)
-        })*/
- }
+}
+ 
 </script>
 </html>
