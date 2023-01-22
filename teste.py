@@ -3,5 +3,5 @@ from time import sleep
 
 while True:
 
-    print('mudou5')
+    print('mudou6')
     sleep(10)
