@@ -1,9 +1,9 @@
-from time import sleep
+from flask import Flask
 
-i = 0 
-while True:
-    if i ==30:
-        raise Exception("teste")
-    i+=1
-    print('att4')
-    sleep(1)
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return 'Web App with Python Flask!'
+
+app.run(host='0.0.0.0', port=81)
