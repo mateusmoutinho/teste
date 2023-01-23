@@ -5,5 +5,5 @@ while True:
     if i ==30:
         raise Exception("teste")
     i+=1
-    print('att3')
+    print('att4')
     sleep(1)
